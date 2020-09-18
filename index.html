@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Vega-Lite Bar Chart</title>
+<meta charset="utf-8" />
+
+<script src="https://cdn.jsdelivr.net/npm/vega@5.3.2/build/vega.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@3.0.3/build/vega-lite.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@4.0.0-rc1/build/vega-embed.js"></script>
+
+<style media="screen">
+/* Add space between Vega-Embed links  */
+.vega-actions a {
+    margin-right: 5px;
+}
+</style>
+</head>
+<body>
+    <h1><center>Normalized Sentiment Score from Cline Center and Brand Watch's Data</center></h1>
+<!-- Container for the visualization -->
+<div id="vis1"></div>
+<div id="vis2"></div>
+<div id="vis3"></div>
+
+
+
+<script>
+// Assign the specification to a local variable vlSpec.
+
+
+var vlSpec1 = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/27guptamohit/test_data/master/hibcat_sample/ClineCenterTest3.csv"
+  },
+  "width": 1000,
+  "height": 600,
+  "layer": [
+    {
+      "encoding": {
+        "x": {"field": "Date", "type": "temporal"},
+        "y": {"field": "Net Sentiment", "type": "quantitative"},
+        "color": {"field": "Source", "type": "nominal"}
+      },
+      "layer": [
+        {"mark": "line"},
+        {
+          "selection": {
+            "label": {
+              "type": "single",
+              "nearest": true,
+              "on": "mouseover",
+              "encodings": ["x"],
+              "empty": "none"
+            }
+          },
+          "mark": "point",
+          "encoding": {
+            "opacity": {
+              "condition": {"selection": "label", "value": 1},
+              "value": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "transform": [{"filter": {"selection": "label"}}],
+      "layer": [
+        {
+          "mark": {"type": "rule", "color": "gray"},
+          "encoding": {
+            "x": {"type": "temporal", "field": "Date", "aggregate": "min"}
+          }
+        },
+        {
+          "encoding": {
+            "text": {"type": "quantitative", "field": "Net Sentiment"},
+            "x": {"type": "temporal", "field": "Date"},
+            "y": {"type": "quantitative", "field": "Net Sentiment"}
+          },
+          "layer": [
+            {
+              "mark": {
+                "type": "text",
+                "stroke": "white",
+                "strokeWidth": 2,
+                "align": "left",
+                "dx": 5,
+                "dy": -5
+              }
+            },
+            {
+              "mark": {"type": "text", "align": "left", "dx": 5, "dy": -5},
+              "encoding": {
+                "color": {"type": "nominal", "field": "Source"}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+
+var vlSpec2 = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/27guptamohit/cbil/master/longitudnal_tiktok2.csv"
+  },
+  "width": 1000,
+  "height": 600,
+  "layer": [
+    {
+      "encoding": {
+        "x": {"field": "Date", "type": "temporal"},
+        "y": {"field": "Net Sentiment", "type": "quantitative"},
+        "color": {"field": "Brand_and_Source", "type": "nominal"}
+      },
+      "layer": [
+        {"mark": "line"},
+        {
+          "selection": {
+            "label": {
+              "type": "single",
+              "nearest": true,
+              "on": "mouseover",
+              "encodings": ["x"],
+              "empty": "none"
+            }
+          },
+          "mark": "point",
+          "encoding": {
+            "opacity": {
+              "condition": {"selection": "label", "value": 1},
+              "value": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "transform": [{"filter": {"selection": "label"}}],
+      "layer": [
+        {
+          "mark": {"type": "rule", "color": "gray"},
+          "encoding": {
+            "x": {"type": "temporal", "field": "Date", "aggregate": "min"}
+          }
+        },
+        {
+          "encoding": {
+            "text": {"type": "quantitative", "field": "Net Sentiment"},
+            "x": {"type": "temporal", "field": "Date"},
+            "y": {"type": "quantitative", "field": "Net Sentiment"}
+          },
+          "layer": [
+            {
+              "mark": {
+                "type": "text",
+                "stroke": "white",
+                "strokeWidth": 2,
+                "align": "left",
+                "dx": 5,
+                "dy": -5
+              }
+            },
+            {
+              "mark": {"type": "text", "align": "left", "dx": 5, "dy": -5},
+              "encoding": {
+                "color": {"type": "nominal", "field": "Brand_and_Source"}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+
+
+var vlSpec3 = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/27guptamohit/cbil/master/longitudnal_tiktok.csv"
+  },
+  "width": 1000,
+  "height": 600,
+  "layer": [
+    {
+      "encoding": {
+        "x": {"field": "Date", "type": "temporal"},
+        "y": {"field": "Net Sentiment", "type": "quantitative"},
+        "color": {"field": "Brand_and_Source", "type": "nominal"}
+      },
+      "layer": [
+        {"mark": "line"},
+        {
+          "selection": {
+            "label": {
+              "type": "single",
+              "nearest": true,
+              "on": "mouseover",
+              "encodings": ["x"],
+              "empty": "none"
+            }
+          },
+          "mark": "point",
+          "encoding": {
+            "opacity": {
+              "condition": {"selection": "label", "value": 1},
+              "value": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "transform": [{"filter": {"selection": "label"}}],
+      "layer": [
+        {
+          "mark": {"type": "rule", "color": "gray"},
+          "encoding": {
+            "x": {"type": "temporal", "field": "Date", "aggregate": "min"}
+          }
+        },
+        {
+          "encoding": {
+            "text": {"type": "quantitative", "field": "Net Sentiment"},
+            "x": {"type": "temporal", "field": "Date"},
+            "y": {"type": "quantitative", "field": "Net Sentiment"}
+          },
+          "layer": [
+            {
+              "mark": {
+                "type": "text",
+                "stroke": "white",
+                "strokeWidth": 2,
+                "align": "left",
+                "dx": 5,
+                "dy": -5
+              }
+            },
+            {
+              "mark": {"type": "text", "align": "left", "dx": 5, "dy": -5},
+              "encoding": {
+                "color": {"type": "nominal", "field": "Brand_and_Source"}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+
+
+
+
+
+// Embed the visualization in the container with id `vis`
+vegaEmbed('#vis1', vlSpec1, {'actions': false});
+vegaEmbed('#vis2', vlSpec2, {'actions': false});
+vegaEmbed('#vis3', vlSpec3, {'actions': false});
+
+
+
+
+</script>
+    
+    
+</body>
+</html>
+
