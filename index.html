@@ -21,6 +21,7 @@
 <div id="vis1"></div>
 <div id="vis2"></div>
 <div id="vis3"></div>
+    <div id="vis4"></div>
 
 
 
@@ -257,6 +258,80 @@ var vlSpec3 = {
 };
 
 
+var vlSpec4 = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/27guptamohit/hibcat/master/longitudnal_10day.csv"
+  },
+  "width": 1000,
+  "height": 600,
+  "layer": [
+    {
+      "encoding": {
+        "x": {"field": "Date", "type": "temporal"},
+        "y": {"field": "Net Sentiment", "type": "quantitative"},
+        "color": {"field": "Brand_and_Source", "type": "nominal"}
+      },
+      "layer": [
+        {"mark": "line"},
+        {
+          "selection": {
+            "label": {
+              "type": "single",
+              "nearest": true,
+              "on": "mouseover",
+              "encodings": ["x"],
+              "empty": "none"
+            }
+          },
+          "mark": "point",
+          "encoding": {
+            "opacity": {
+              "condition": {"selection": "label", "value": 1},
+              "value": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "transform": [{"filter": {"selection": "label"}}],
+      "layer": [
+        {
+          "mark": {"type": "rule", "color": "gray"},
+          "encoding": {
+            "x": {"type": "temporal", "field": "Date", "aggregate": "min"}
+          }
+        },
+        {
+          "encoding": {
+            "text": {"type": "quantitative", "field": "Net Sentiment"},
+            "x": {"type": "temporal", "field": "Date"},
+            "y": {"type": "quantitative", "field": "Net Sentiment"}
+          },
+          "layer": [
+            {
+              "mark": {
+                "type": "text",
+                "stroke": "white",
+                "strokeWidth": 2,
+                "align": "left",
+                "dx": 5,
+                "dy": -5
+              }
+            },
+            {
+              "mark": {"type": "text", "align": "left", "dx": 5, "dy": -5},
+              "encoding": {
+                "color": {"type": "nominal", "field": "Brand_and_Source"}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
 
 
 
@@ -265,6 +340,7 @@ var vlSpec3 = {
 vegaEmbed('#vis1', vlSpec1, {'actions': false});
 vegaEmbed('#vis2', vlSpec2, {'actions': false});
 vegaEmbed('#vis3', vlSpec3, {'actions': false});
+vegaEmbed('#vis4', vlSpec3, {'actions': false});
 
 
 
